@@ -1,0 +1,312 @@
+/* Panthera Insight — public legal site.
+   Palette matches lib/core/theme/app_theme.dart:
+     pantheraDeepPurple  rgb(47,  19,  40)
+     pantheraMidPurple   rgb(94,  52,  86)
+     pantheraGold        rgb(205, 156, 127)
+     pantheraAqua        rgb(54,  182, 195)   — unused on legal pages.
+*/
+
+:root {
+  --deep:        #2F1328;
+  --mid:         #5E3456;
+  --gold:        #CD9C7F;
+  --gold-soft:   #E4C6B0;
+
+  --bg:          #FAFAF7;
+  --surface:     #FFFFFF;
+  --surface-2:   #F4F2EE;
+  --border:      #E8E2D8;
+
+  --text:        #1A1A1A;
+  --muted:       #6B6B6B;
+  --tertiary:    #9A9A9A;
+
+  --danger:      #A32D2D;
+  --max-width:   760px;
+
+  --font-serif:  Didot, "Bodoni 72", "Playfair Display", Georgia, serif;
+  --font-sans:   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #1A0E18;
+    --surface:   #261621;
+    --surface-2: #2F1B29;
+    --border:    #3D2435;
+    --text:      #F3EEE8;
+    --muted:     #C7BBB1;
+    --tertiary:  #8E8278;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────── Header ─────────────────────── */
+
+header.site {
+  background: var(--deep);
+  color: var(--gold);
+  border-bottom: 1px solid var(--mid);
+  padding: 22px 24px 18px;
+  /* Pinned: stays in view while the main content scrolls under it.
+     z-index keeps the header above any positioned children of
+     `main`. The drop-shadow appears only once content has scrolled
+     past, so the header looks flat at the top of the page. */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+header.site .inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+header.site .brand {
+  text-align: center;
+}
+
+header.site h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: var(--gold);
+}
+
+header.site .wordmark {
+  display: block;
+  height: 30px;
+  width: auto;
+  /* The PNG ships at full resolution; constrain by height so the
+     wordmark scales gracefully across devices without pixelating
+     on retina. */
+}
+
+header.site .submark {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 6px;
+  color: var(--gold-soft);
+  margin-top: 4px;
+}
+
+header.site nav {
+  margin-top: 12px;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+header.site nav a {
+  color: var(--gold-soft);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  transition: color 120ms ease;
+}
+
+header.site nav a:hover { color: #fff; }
+header.site nav a[aria-current="page"] {
+  color: #fff;
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 2px;
+}
+
+/* ─────────────────────── Main ─────────────────────── */
+
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+main h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: 0.3px;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+main p.lede {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  margin: 0 0 28px;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 19px;
+  margin: 36px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+h2:first-of-type { margin-top: 24px; }
+
+h3 {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 22px 0 6px;
+}
+
+ul, ol {
+  padding-left: 22px;
+  margin: 8px 0 14px;
+}
+
+li { margin: 4px 0; }
+
+a {
+  color: var(--mid);
+  text-decoration-color: var(--gold);
+  text-underline-offset: 3px;
+}
+@media (prefers-color-scheme: dark) {
+  a { color: var(--gold-soft); }
+}
+
+a:hover { color: var(--deep); }
+@media (prefers-color-scheme: dark) {
+  a:hover { color: #fff; }
+}
+
+strong { font-weight: 600; }
+
+code, .mono {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+/* ─────────────────────── Callouts ─────────────────────── */
+
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 14px 18px;
+  margin: 18px 0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.callout.danger {
+  border-left-color: var(--danger);
+}
+
+/* ─────────────────────── Buttons ─────────────────────── */
+
+.button {
+  display: inline-block;
+  padding: 11px 20px;
+  background: var(--deep);
+  color: var(--gold-soft);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  border: 1px solid var(--mid);
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.button:hover {
+  background: var(--mid);
+  color: #fff;
+}
+
+.button.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+.button.danger:hover {
+  background: #8a1f1f;
+}
+
+/* ─────────────────────── Tables ─────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 20px;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+
+/* ─────────────────────── Footer ─────────────────────── */
+
+footer.site {
+  border-top: 1px solid var(--border);
+  margin-top: 48px;
+  padding: 22px 24px;
+  font-size: 12px;
+  color: var(--tertiary);
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+footer.site strong {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ─────────────────────── Narrow screens ─────────────────────── */
+
+@media (max-width: 520px) {
+  header.site { padding: 16px 16px 12px; }
+  header.site h1 { font-size: 24px; }
+  header.site .wordmark { height: 26px; }
+  header.site .submark { font-size: 12px; letter-spacing: 5px; }
+  main { padding: 28px 16px 48px; }
+  main h1 { font-size: 26px; }
+  h2 { font-size: 17px; }
+}
