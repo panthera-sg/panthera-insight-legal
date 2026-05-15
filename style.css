@@ -82,6 +82,9 @@ header.site .inner {
 
 header.site .brand {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 header.site h1 {
@@ -95,6 +98,7 @@ header.site h1 {
 
 header.site .wordmark {
   display: block;
+  margin: 0 auto;
   height: 30px;
   width: auto;
   /* The PNG ships at full resolution; constrain by height so the
@@ -107,6 +111,9 @@ header.site .submark {
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 6px;
+  /* Trailing letter-spacing pushes the visual center right; pad-left
+     by the same amount so INSIGHT sits true-center under the PNG. */
+  padding-left: 6px;
   color: var(--gold-soft);
   margin-top: 4px;
 }
