@@ -12,7 +12,7 @@
   --gold:        #CD9C7F;
   --gold-soft:   #E4C6B0;
 
-  --bg:          #FAFAF7;
+  --bg:          #EFEBE4;
   --surface:     #FFFFFF;
   --surface-2:   #F4F2EE;
   --border:      #E8E2D8;
@@ -24,13 +24,35 @@
   --danger:      #A32D2D;
   --max-width:   760px;
 
+  --link:        var(--mid);
+  --link-hover:  var(--deep);
+
   --font-serif:  Didot, "Bodoni 72", "Playfair Display", Georgia, serif;
   --font-sans:   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                  "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Dark palette. The same token overrides are applied in two cases:
+   (1) the visitor has explicitly chosen dark via the header toggle
+       (`data-theme="dark"` set on <html> by theme.js), and
+   (2) no explicit choice is stored and the OS prefers dark. The
+       early-apply script in each page resolves the active theme and
+       writes data-theme before paint, so the media query below is a
+       no-JS fallback only — hence the :not([data-theme]) guard. */
+:root[data-theme="dark"] {
+  --bg:        #1A0E18;
+  --surface:   #261621;
+  --surface-2: #2F1B29;
+  --border:    #3D2435;
+  --text:      #F3EEE8;
+  --muted:     #C7BBB1;
+  --tertiary:  #8E8278;
+  --link:      var(--gold-soft);
+  --link-hover:#FFFFFF;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --bg:        #1A0E18;
     --surface:   #261621;
     --surface-2: #2F1B29;
@@ -38,6 +60,8 @@
     --text:      #F3EEE8;
     --muted:     #C7BBB1;
     --tertiary:  #8E8278;
+    --link:      var(--gold-soft);
+    --link-hover:#FFFFFF;
   }
 }
 
@@ -141,6 +165,57 @@ header.site nav a[aria-current="page"] {
   padding-bottom: 2px;
 }
 
+/* Theme toggle. Sits in the header alongside the nav links and
+   inherits the gold-on-deep palette so it reads as part of the
+   masthead in both light and dark. The label/icon are swapped by
+   theme.js to reflect the action the button performs. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--gold-soft);
+  border: 1px solid var(--mid);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease,
+              background 120ms ease;
+}
+
+.theme-toggle:hover {
+  color: #fff;
+  border-color: var(--gold);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-toggle .icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* Reveal the label/icon pair matching the active theme; the other is
+   hidden. theme.js sets data-theme on <html>, so this keys off the
+   same source of truth as the palette. Defaults (no data-theme, i.e.
+   no-JS) show the dark-mode affordance under a light OS preference. */
+.theme-toggle .when-dark { display: none; }
+.theme-toggle .when-light { display: inline-flex; align-items: center; gap: 6px; }
+
+:root[data-theme="dark"] .theme-toggle .when-light,
+:root[data-theme="light"] .theme-toggle .when-dark { display: none; }
+:root[data-theme="dark"] .theme-toggle .when-dark { display: inline-flex; align-items: center; gap: 6px; }
+:root[data-theme="light"] .theme-toggle .when-light { display: inline-flex; align-items: center; gap: 6px; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-toggle .when-light { display: none; }
+  :root:not([data-theme]) .theme-toggle .when-dark {
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+}
+
 /* ─────────────────────── Main ─────────────────────── */
 
 main {
@@ -195,18 +270,12 @@ ul, ol {
 li { margin: 4px 0; }
 
 a {
-  color: var(--mid);
+  color: var(--link);
   text-decoration-color: var(--gold);
   text-underline-offset: 3px;
 }
-@media (prefers-color-scheme: dark) {
-  a { color: var(--gold-soft); }
-}
 
-a:hover { color: var(--deep); }
-@media (prefers-color-scheme: dark) {
-  a:hover { color: #fff; }
-}
+a:hover { color: var(--link-hover); }
 
 strong { font-weight: 600; }
 
@@ -292,17 +361,27 @@ th {
 /* ─────────────────────── Footer ─────────────────────── */
 
 footer.site {
-  border-top: 1px solid var(--border);
+  /* Mirror the masthead: deep-purple ground with gold text so the
+     page is bookended by the same Panthera palette in both themes. */
+  background: var(--deep);
+  border-top: 1px solid var(--mid);
   margin-top: 48px;
   padding: 22px 24px;
   font-size: 12px;
-  color: var(--tertiary);
+  color: var(--gold-soft);
   text-align: center;
   letter-spacing: 0.3px;
+  /* Pinned to the bottom of the viewport, mirroring the sticky
+     header. The upward shadow lifts it off the content scrolling
+     beneath; it settles flush once the page is scrolled to the end. */
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.18);
 }
 
 footer.site strong {
-  color: var(--muted);
+  color: var(--gold);
   font-weight: 600;
 }
 
