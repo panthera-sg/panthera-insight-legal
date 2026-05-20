@@ -67,6 +67,15 @@
 
 * { box-sizing: border-box; }
 
+::selection {
+  background: var(--mid);
+  color: #fff;
+}
+::-moz-selection {
+  background: var(--mid);
+  color: #fff;
+}
+
 html, body { margin: 0; padding: 0; }
 
 body {
