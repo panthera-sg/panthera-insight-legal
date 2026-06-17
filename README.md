@@ -16,5 +16,5 @@
 ## Notes
 
 - Operating entity: **Panthera International Asia Capital Pte. Ltd.**, regulated under a Singapore MAS licence.
-- DPO mailbox: `pantherainsight@gmail.com`.
+- DPO mailbox: `it@pantherafo.com`.
 - Once the MkDocs site is live at its new URL, update `AppConstants.legalSiteBase` in the main app so the in-app Settings tiles point to the right place, then delete this folder.
